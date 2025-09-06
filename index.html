@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Papers - Your Name</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .subtitle {
+            font-size: 1.2em;
+            opacity: 0.95;
+        }
+        
+        .about {
+            padding: 40px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .about h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.8em;
+        }
+        
+        .about p {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .papers {
+            padding: 40px;
+        }
+        
+        .papers h2 {
+            color: #667eea;
+            margin-bottom: 30px;
+            font-size: 1.8em;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+        }
+        
+        .paper-item {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-left: 4px solid #667eea;
+        }
+        
+        .paper-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+        }
+        
+        .paper-title {
+            font-size: 1.3em;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .paper-authors {
+            color: #666;
+            margin-bottom: 8px;
+            font-style: italic;
+        }
+        
+        .paper-info {
+            color: #888;
+            font-size: 0.95em;
+            margin-bottom: 15px;
+        }
+        
+        .paper-abstract {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 5px;
+        }
+        
+        .paper-links {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .paper-link {
+            display: inline-block;
+            padding: 8px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .paper-link:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            .paper-item {
+                padding: 20px;
+            }
+            
+            .paper-title {
+                font-size: 1.1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Research Papers</h1>
+            <p class="subtitle">Your Name | Research Area</p>
+        </header>
+        
+        <section class="about">
+            <h2>About</h2>
+            <p>
+                Welcome to my research repository. Here you can find my published papers and ongoing research work. 
+                My research focuses on [Your Research Area]. Feel free to download and cite any of my work.
+            </p>
+        </section>
+        
+        <section class="papers">
+            <h2>Publications</h2>
+            
+            <!-- Paper 1 Example -->
+            <div class="paper-item">
+                <h3 class="paper-title">Your First Paper Title Here</h3>
+                <p class="paper-authors">Your Name, Co-author Name, Another Co-author</p>
+                <p class="paper-info">Journal/Conference Name, 2024</p>
+                <div class="paper-abstract">
+                    <strong>Abstract:</strong> This is where you put a brief abstract or summary of your paper. 
+                    Describe the main findings, methodology, and significance of your research in a few sentences.
+                </div>
+                <div class="paper-links">
+                    <a href="pdfs/paper1.pdf" class="paper-link" target="_blank">📄 Download PDF</a>
+                    <a href="https://doi.org/your-doi-here" class="paper-link" target="_blank">🔗 DOI Link</a>
+                </div>
+            </div>
+            
+            <!-- Paper 2 Example -->
+            <div class="paper-item">
+                <h3 class="paper-title">Your Second Paper Title Here</h3>
+                <p class="paper-authors">Your Name, Collaborator Name</p>
+                <p class="paper-info">Conference Name, 2023</p>
+                <div class="paper-abstract">
+                    <strong>Abstract:</strong> Another abstract goes here. Explain what this research contributes 
+                    to your field and why it's important.
+                </div>
+                <div class="paper-links">
+                    <a href="pdfs/paper2.pdf" class="paper-link" target="_blank">📄 Download PDF</a>
+                </div>
+            </div>
+            
+            <!-- Paper 3 Example -->
+            <div class="paper-item">
+                <h3 class="paper-title">Your Third Paper Title Here</h3>
+                <p class="paper-authors">Your Name et al.</p>
+                <p class="paper-info">Journal Name, 2023</p>
+                <div class="paper-abstract">
+                    <strong>Abstract:</strong> Brief description of this research work and its key contributions.
+                </div>
+                <div class="paper-links">
+                    <a href="pdfs/paper3.pdf" class="paper-link" target="_blank">📄 Download PDF</a>
+                </div>
+            </div>
+            
+            <!-- Add more papers by copying the paper-item div structure above -->
+            
+        </section>
+        
+        <footer>
+            <p>© 2024 Your Name | <a href="https://github.com/sman0">GitHub</a> | <a href="mailto:your.email@example.com">Contact</a></p>
+        </footer>
+    </div>
+</body>
+</html>
