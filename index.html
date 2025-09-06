@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Research Papers – David Goldsman</title>
+  <meta name="description" content="Publications and working papers by David Goldsman (ISyE, Georgia Tech): simulation methodology, Monte Carlo, steady‑state quantiles, GMC/GMCC." />
+  <meta name="color-scheme" content="light dark">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%23003057'/%3E%3Ctext x='50' y='62' font-size='54' text-anchor='middle' fill='%23B3A369' font-family='Segoe UI,Arial,sans-serif'%3EDG%3C/text%3E%3C/svg%3E" />
+  <meta property="og:title" content="Research Papers – David Goldsman" />
+  <meta property="og:description" content="Simulation methodology, Monte Carlo methods, steady‑state quantiles, GMC/GMCC." />
+  <meta property="og:type" content="website" />
+  $1
+  <meta name="theme-color" content="#003057" />
+  <style>
+    :root {
+      --bg-grad-a: #003057; /* indigo */
+      --bg-grad-b: #B3A369; /* purple */
+      --text: #232323;
+      --muted: #5a5a5a;
+      --muted-2: #757575;
+      --card: #ffffff;
+      --card-alt: #f8f9fa;
+      --accent: #003057;
+      --accent-2: #B3A369;
+      --border: #e5e7eb;
+      --ring: rgba(179,163,105,.45);
+      --mark-bg: #fff1c2;
+      --mark-text: #1b1b1b;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text: #e8e8e8;
+        --muted: #b8b8b8;
+        --muted-2: #9aa0a6;
+        --card: #14161a;
+        --card-alt: #0f1115;
+        --border: #243042;
+        --mark-bg: #fff1c2;
+        --mark-text: #ffe89a;
+      }
+      body { background: linear-gradient(135deg, #001a2d, #002b49); }
+    }
+    /* Explicit dark override via .dark class */
+    .dark :root {
+      --text: #e8e8e8;
+      --muted: #b8b8b8;
+      --muted-2: #9aa0a6;
+      --card: #14161a;
+      --card-alt: #0f1115;
+      --border: #243042;
+      --mark-bg: #fff1c2;
+      --mark-text: #ffe89a;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; padding: 20px; line-height: 1.6; color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: linear-gradient(135deg, var(--bg-grad-a), var(--bg-grad-b));
+    }
+    .container {
+      max-width: 980px; margin: 0 auto; background: var(--card);
+      border-radius: 14px; overflow: clip; box-shadow: 0 20px 60px rgba(0,0,0,.30);
+    }
+    header {
+      background: linear-gradient(135deg, var(--bg-grad-a), var(--bg-grad-b)); color: #fff;
+      padding: 44px 32px; text-align: center; position: relative;
+    }
+    header h1 { font-size: clamp(2rem, 2.4rem, 2.8rem); margin: 0 0 8px; text-shadow: 0 2px 16px rgba(0,0,0,.25); }
+    header .subtitle { opacity: .95; font-size: 1.05rem; }
+    .last-updated { margin-top: 8px; font-size: .9rem; opacity: .9; }
+
+    .toolbar { display: grid; gap: 12px; grid-template-columns: 1fr; padding: 18px 18px 0; background: var(--card); }
+    .controls { display: grid; gap: 10px; grid-template-columns: 1fr minmax(180px, 220px) minmax(160px, 200px) auto; align-items: center; }
+    @media (max-width: 820px) { .controls { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 560px) { .controls { grid-template-columns: 1fr; } }
+
+    .search { display: flex; align-items: center; gap: 8px; background: var(--card-alt); border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; }
+    .search input {
+      border: 0; outline: none; background: transparent; width: 100%; font-size: 1rem; color: var(--text);
+    }
+    .search svg { flex: 0 0 auto; width: 18px; height: 18px; opacity: .7; }
+
+    .select, .btn {
+      border: 1px solid var(--border); border-radius: 12px; padding: 10px 12px; background: var(--card-alt); color: var(--text);
+      font-size: .98rem; cursor: pointer; box-shadow: 0 1px 0 rgba(0,0,0,.04);
+    }
+    .btn-primary { background: var(--accent); color: #fff; border: 2px solid var(--accent-2); }
+    .btn:focus, .select:focus, .search:focus-within { outline: 3px solid var(--ring); outline-offset: 2px; }
+
+    .about, .papers { padding: 28px; }
+    .about { background: var(--card-alt); border-bottom: 1px solid var(--border); }
+    .about h2, .papers h2 { color: var(--accent); margin: 0 0 14px; font-size: 1.5rem; }
+    .about p { color: var(--muted); margin: 0; }
+
+    .counter { color: var(--muted-2); font-size: .92rem; margin-top: 6px; }
+
+    .papers-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+
+    article.paper {
+      background: var(--card-alt); border-radius: 12px; padding: 18px; border-left: 4px solid var(--accent-2);
+      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+    }
+    article.paper:hover { transform: translateX(4px); box-shadow: 0 10px 24px rgba(102,126,234,.20); }
+    .paper-title { font-size: 1.18rem; margin: 0 0 6px; color: var(--text); }
+    .paper-meta { color: var(--muted-2); font-size: .95rem; margin-bottom: 10px; display: flex; flex-wrap: wrap; gap: 10px; }
+    .paper-abstract { background: var(--card); border-radius: 8px; padding: 12px; color: var(--muted); margin-bottom: 12px; }
+    .paper-links { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 999px; background: var(--card);
+      border: 1px solid var(--border); font-size: .85rem; color: var(--muted-2);
+    }
+    .chip svg { width: 14px; height: 14px; opacity: .8; }
+    mark { background: var(--mark-bg); color: var(--mark-text); padding: 0 .15em; border-radius: 3px; }
+
+    footer { background: #1f2937; color: #e5e7eb; text-align: center; padding: 18px; font-size: .95rem; }
+    footer a { color: #93c5fd; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    .skip-link {
+      position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden;
+    }
+    .skip-link:focus { left: 16px; top: 16px; width: auto; height: auto; background: #fff; padding: 8px 10px; border-radius: 8px; z-index: 9; }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; transition: none !important; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      header, .toolbar, footer { display: none; }
+      .container { box-shadow: none; }
+      .paper { border: 1px solid #999; }
+    }
+  </style>
+  <script type="application/ld+json" id="person-jsonld">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "David Goldsman",
+    "affiliation": {"@type":"CollegeOrUniversity","name":"Georgia Institute of Technology"},
+    "jobTitle": "Professor, Industrial & Systems Engineering",
+    "sameAs": ["https://github.com/sman0"],
+    "email": "mailto:sman@gatech.edu"
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#papers">Skip to publications</a>
+  <div class="container">
+    <header role="banner">
+      <h1>Research Papers</h1>
+      <p class="subtitle">David Goldsman • Industrial & Systems Engineering, Georgia Tech</p>
+      <p class="last-updated" id="lastUpdated" aria-live="polite"></p>
+    </header>
+
+    <div class="toolbar" role="region" aria-label="controls">
+      <div class="controls">
+        <label class="search" aria-label="Search publications">
+          <svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/></svg>
+          <input id="q" type="search" placeholder="Search by title, author, venue… (press / to focus)" autocomplete="off" />
+        </label>
+        <select id="sort" class="select" aria-label="Sort publications">
+          <option value="relevance">Sort: Relevance</option>
+          <option value="title">Sort: Title (A→Z)</option>
+          <option value="newest">Sort: Newest first</option>
+        </select>
+        <select id="tag" class="select" aria-label="Filter by tag (optional)">
+          <option value="">Filter: All tags</option>
+        </select>
+        <button class="btn btn-primary" id="toggleTheme" type="button" aria-pressed="false">Toggle dark</button>
+      </div>
+      <div class="counter" id="counter" aria-live="polite"></div>
+    </div>
+
+    <section class="about" aria-labelledby="about-title">
+      <h2 id="about-title">About</h2>
+      <p>
+        Welcome to my research repository. I am a professor at the H. Milton Stewart School of Industrial and Systems Engineering at
+        Georgia Institute of Technology. My research focuses on simulation methodology, Monte Carlo methods, steady-state quantile estimation,
+        and statistical computing. This page lists selected publications and working papers; feel free to download and cite the work.
+      </p>
+    </section>
+
+    <main id="papers" class="papers" aria-labelledby="papers-title" role="main">
+      <h2 id="papers-title">Publications</h2>
+      <div class="papers-grid" id="list" role="list" aria-live="polite"></div>
+      <noscript>
+        <p>Your browser has JavaScript disabled. The interactive list is unavailable, but you can access PDFs here:</p>
+        <ul>
+          <li><a href="pdfs/gh-Dingec-GMC-processes.pdf" type="application/pdf" rel="noopener noreferrer">Some Steady-State Simulation Processes That Satisfy the Geometric-Moment Contraction Condition</a></li>
+          <li><a href="pdfs/gh-Dingec-GMCC-theory.pdf" type="application/pdf" rel="noopener noreferrer">Theory of Simulation Output Processes Satisfying the Geometric-Moment Contraction Condition</a></li>
+          <li><a href="pdfs/gh-Dingec-GMC-benchmarks.pdf" type="application/pdf" rel="noopener noreferrer">Geometric-Moment Contraction: Simulation-Based Benchmark Examples</a></li>
+          <li><a href="pdfs/gh-Alexopoulos-STS-quantiles.pdf" type="application/pdf" rel="noopener noreferrer">Steady-State Quantile Estimation Using Standardized Time Series</a></li>
+          <li><a href="pdfs/GMCC-MASAMU-250902.pdf" type="application/pdf" rel="noopener noreferrer">Properties of Quadratic-Form Estimators under GMCC (Slides)</a></li>
+          <li><a href="pdfs/gh-Dingec-GMC-variance.pdf" type="application/pdf" rel="noopener noreferrer">Variance Parameter Estimation for the Quantile Indicator Process</a></li>
+        </ul>
+      </noscript>
+    </main>
+
+    <footer role="contentinfo">
+      <p>Copyright <span id="cpyear"></span> David Goldsman • <a href="https://github.com/sman0" target="_blank" rel="noopener noreferrer">GitHub</a> • <a href="mailto:sman@gatech.edu">Contact</a></p>
+    </footer>
+  </div>
+
+  <script>
+    // --- Data ---------------------------------------------------------------
+    /** @type {Array<{title:string, authors:string, venue?:string, year?:number, abstract:string, pdf:string, tags?:string[]}>} */
+    const PAPERS = [
+  {
+    title: "Some Steady-State Simulation Processes That Satisfy the Geometric-Moment Contraction Condition",
+    authors: "Kemal Dinçer Dingeç; Christos Alexopoulos; David Goldsman; Athanasios Lolos; James R. Wilson",
+    venue: "Submitted to Operations Research",
+    year: 2025,
+    abstract: "Identifies broad classes of stationary simulation processes that satisfy GMC; gives sufficient conditions for transformations, linear combinations, and mixtures to remain GMC; shows batch-means and indicator processes inherit GMC; includes examples motivated by simulation output analysis.",
+    pdf: "pdfs/gh-Dingec-GMC-processes.pdf",
+    tags: ["GMC","stationary processes","theory"]
+  },
+  {
+    title: "Theory of Simulation Output Processes Satisfying the Geometric-Moment Contraction Condition",
+    authors: "Kemal Dinçer Dingeç; Christos Alexopoulos; David Goldsman; Athanasios Lolos; James R. Wilson",
+    venue: "Submitted to Operations Research",
+    year: 2025,
+    abstract: "Develops properties of GMCC processes and their indicator processes, deriving geometric bounds for autocovariances (SRD), finiteness of variance parameters for means/indicators/quantiles, and enabling functional CLTs for asymptotic CIs.",
+    pdf: "pdfs/gh-Dingec-GMCC-theory.pdf",
+    tags: ["GMCC","autocovariance","short-range dependence"]
+  },
+  {
+    title: "Geometric-Moment Contraction of Stationary Processes and Their Indicator Processes: Simulation-Based Benchmark Examples",
+    authors: "Kemal Dinçer Dingeç; David Goldsman; Christos Alexopoulos; Athanasios Lolos; James R. Wilson",
+    venue: "Submitted to INFORMS Journal on Computing",
+    year: 2025,
+    abstract: "Provides simulation benchmarks to stress-test mean and quantile estimators under GMC, with exact/tractable ACFs and variance parameters for AR(1), AR(1) with Cauchy innovations, autoregressive-to-Pareto, and M/M/1 waiting times; examines batch-means autocorrelations.",
+    pdf: "pdfs/gh-Dingec-GMC-benchmarks.pdf",
+    tags: ["benchmarks","AR(1)","M/M/1","variance parameter"]
+  },
+  {
+    title: "Steady-State Quantile Estimation Using Standardized Time Series",
+    authors: "Christos Alexopoulos; David Goldsman; Athanasios Lolos; Kemal Dinçer Dingeç; James R. Wilson",
+    venue: "Submitted to Management Science",
+    year: 2024,
+    abstract: "Introduces nonsequential STS-based procedures for steady-state quantile estimation with batching; establishes asymptotic properties and exactness of CIs; studies STS area, batched-quantile, and combined variance-parameter estimators.",
+    pdf: "pdfs/gh-Alexopoulos-STS-quantiles.pdf",
+    tags: ["quantiles","STS","batching","CIs"]
+  },
+  {
+    title: "Properties of Quadratic-Form Estimators for Stationary Processes Satisfying the Geometric-Moment Contraction Condition (Slides)",
+    authors: "David Goldsman (with Kemal Dingeç and James R. Wilson)",
+    venue: "Slide deck (43 slides)",
+    year: 2025,
+    abstract: "Talk covering batch-means variance estimation, mixing vs. GMCC, AR(1) results, and quadratic-form variance estimators; overview of ongoing work and future directions.",
+    pdf: "pdfs/GMCC-MASAMU-250902.pdf",
+    tags: ["slides","GMCC","batch means","quadratic forms"]
+  },
+  {
+    title: "Variance Parameter Estimation for the Quantile Indicator Process",
+    authors: "Kemal Dinçer Dingeç; Christos Alexopoulos; David Goldsman; Athanasios Lolos; James R. Wilson",
+    venue: "Submitted to Operations Research",
+    year: 2024,
+    abstract: "Develops NBQ- and STS-based estimators for the asymptotic variance parameters of the quantile indicator process; shows bias is O(m^{-1/4}) in batch size m; proposes a combined estimator with improved AMSE; validated via Monte Carlo.",
+    pdf: "pdfs/gh-Dingec-GMC-variance.pdf",
+    tags: ["quantile indicator","variance parameter","NBQ","STS"]
+  }
+];
+
+    // --- Utilities ---------------------------------------------------------
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+    const escapeHTML = (s='') => s.replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[m]));
+
+    const by = (k) => (a,b)=> (a[k]??'').toString().localeCompare((b[k]??'').toString());
+
+    function tokenize(query) {
+      // support quoted phrases
+      const tokens = [];
+      const re = /\"([^\"]+)\"|(\S+)/g;
+      let m; const normalized = query.normalize('NFKD').toLowerCase();
+      while ((m = re.exec(normalized))) tokens.push((m[1]||m[2]).trim());
+      return tokens;
+    }
+
+    function scorePaper(p, tokens) {
+      if (!tokens.length) return 0;
+      // weights: title 3x, authors 2x, tags 1.5x, venue 1x, abstract 0.5x
+      const fields = [
+        [p.title||'', 3],
+        [p.authors||'', 2],
+        [(p.tags||[]).join(' '), 1.5],
+        [p.venue||'', 1],
+        [p.abstract||'', 0.5]
+      ];
+      let score = 0;
+      const norm = s => s.normalize('NFKD').toLowerCase();
+      for (const [text, w] of fields) {
+        const t = norm(text);
+        for (const tok of tokens) {
+          const count = t.split(tok).length - 1; // occurrences
+          if (count>0) score += w * count;
+        }
+      }
+      return score;
+    }
+
+    function highlight(text, tokens) {
+      if (!tokens.length) return escapeHTML(text);
+      let out = escapeHTML(text);
+      for (const tok of tokens.map(t=>t.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'))) {
+        const re = new RegExp(`(${tok})`, 'gi');
+        out = out.replace(re, '<mark>$1</mark>');
+      }
+      return out;
+    }
+
+    function buildTagOptions() {
+      const tagSel = $('#tag');
+      const tagSet = new Set(PAPERS.flatMap(p => p.tags||[]));
+      [...tagSet].sort((a,b)=>a.localeCompare(b)).forEach(t => {
+        const opt = document.createElement('option');
+        opt.value = t; opt.textContent = `Tag: ${t}`;
+        tagSel.appendChild(opt);
+      });
+    }
+
+    function renderList(items, tokens) {
+      const list = $('#list');
+      list.innerHTML = '';
+      const frag = document.createDocumentFragment();
+      items.forEach((p) => {
+        const a = document.createElement('article');
+        a.className = 'paper';
+        a.setAttribute('role', 'listitem');
+        const titleHTML = highlight(p.title, tokens);
+        const authorsHTML = highlight(p.authors, tokens);
+        const abstractHTML = highlight(p.abstract, tokens);
+        a.innerHTML = `
+          <h3 class="paper-title">${titleHTML}</h3>
+          <div class="paper-meta">
+            <span class="chip" title="Authors">${icon('users')}${authorsHTML}</span>
+            ${p.venue ? `<span class="chip" title="Venue/Info">${icon('info')}${escapeHTML(p.venue)}</span>` : ''}
+            ${p.year ? `<span class="chip" title="Year">${icon('calendar')}${p.year}</span>` : ''}
+            ${p.tags?.length ? `<span class="chip" aria-label="tags">${icon('tag')}${p.tags.map(escapeHTML).join(' • ')}</span>` : ''}
+          </div>
+          <div class="paper-abstract"><strong>Abstract:</strong> ${abstractHTML}</div>
+          <div class="paper-links">
+            <a class="btn btn-primary" href="${p.pdf}" type="application/pdf" target="_blank" rel="noopener noreferrer" aria-label="Open PDF: ${escapeHTML(p.title)}">${icon('pdf')} Download PDF</a>
+            <button class="btn" data-cite>Copy citation</button>
+          </div>
+        `;
+        // attach simple BibTeX on the fly
+        a.querySelector('[data-cite]').addEventListener('click', async () => {
+          const key = (p.authors.split(';')[0].split(' ').slice(-1)[0] || 'key') + (p.year||'');
+          const bib = `@misc{${key},\n  title={${p.title}},\n  author={${p.authors}},\n  year={${p.year||''}},\n  note={${p.venue||''}},\n  howpublished={\\url{${location.origin + location.pathname}${p.pdf.startsWith('/')?'':p.pdf}}}\n}`;
+          try { await navigator.clipboard.writeText(bib); toast('BibTeX copied'); } catch { toast('Press Ctrl+C to copy', 1800, bib); }
+        });
+        frag.appendChild(a);
+      });
+      list.appendChild(frag);
+      $('#counter').textContent = `${items.length} item${items.length!==1?'s':''}`;
+      injectArticleJSONLD(items);
+    }
+
+    function icon(name) {
+      const paths = {
+        search: '<path d="M10 2a8 8 0 105.293 14.293l4.707 4.707 1.414-1.414-4.707-4.707A8 8 0 0010 2zm0 2a6 6 0 110 12 6 6 0 010-12z"/>',
+        users: '<path d="M7 11a4 4 0 110-8 4 4 0 010 8zm6 0a4 4 0 110-8 4 4 0 010 8zM2 20a5 5 0 015-5h0a5 5 0 015 5v1H2v-1zm10 0a5 5 0 015-5h0a5 5 0 015 5v1h-10v-1z"/>',
+        info: '<path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>',
+        calendar: '<path d="M7 2h2v2h6V2h2v2h3v16H4V4h3V2zm12 6H6v10h13V8z"/>',
+        pdf: '<path d="M6 2h9l5 5v13a2 2 0 01-2 2H6a2 2 0 01-2-2V4a2 2 0 012-2zm8 1.5V7h3.5L14 3.5zM8 12h3a2 2 0 010 4H8v-4zm1.5 3h1a1 1 0 000-2h-1v2zm3.5-3h2.2a1.8 1.8 0 110 3.6H13V12zm1.7 2.6a.8.8 0 100-1.6H14v1.6h.7zM8 9h5v1.5H8V9z"/>',
+        tag: '<path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12.99V6h6.99l8.59 8.59a2 2 0 010 2.82zM7.5 8A1.5 1.5 0 107.5 5a1.5 1.5 0 000 3z"/>'
+      };
+      return `<svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor">${paths[name]||''}</svg>`;
+    }
+
+    // --- Search, Filter & Sort --------------------------------------------
+    let current = [...PAPERS];
+    const q = $('#q');
+    const sort = $('#sort');
+    const tagSel = $('#tag');
+
+    function applyFilters(pushUrl=true) {
+      const term = q.value.trim();
+      const tokens = tokenize(term);
+      const tag = tagSel.value;
+      let filtered = PAPERS.filter(p => !tag || (p.tags||[]).includes(tag));
+      if (tokens.length) {
+        filtered = filtered.map(p => ({ p, s: scorePaper(p, tokens) }))
+                           .filter(ps => ps.s > 0)
+                           .sort((a,b)=> b.s - a.s)
+                           .map(ps => ps.p);
+      }
+      if (!tokens.length && sort.value === 'title') filtered.sort((a,b)=>a.title.localeCompare(b.title));
+      else if (!tokens.length && sort.value === 'newest') filtered.sort((a,b)=> (b.year||0) - (a.year||0) || a.title.localeCompare(b.title));
+      // if relevance, filtered is already relevance-sorted when tokens exist; otherwise leave original order
+      current = filtered;
+      renderList(current, tokens);
+      if (pushUrl) syncURL();
+    }
+
+    // Sync state to URL for shareable searches
+    function syncURL() {
+      const params = new URLSearchParams();
+      if (q.value.trim()) params.set('q', q.value.trim());
+      if (sort.value && sort.value !== 'relevance') params.set('sort', sort.value);
+      if (tagSel.value) params.set('tag', tagSel.value);
+      const qs = params.toString();
+      history.replaceState(null, '', qs ? `?${qs}` : location.pathname);
+    }
+    function restoreFromURL() {
+      const params = new URLSearchParams(location.search);
+      const qv = params.get('q') || '';
+      const sv = params.get('sort') || 'relevance';
+      const tv = params.get('tag') || '';
+      q.value = qv; sort.value = sv; tagSel.value = tv;
+      applyFilters(false);
+    }
+
+    const debounce = (fn, ms=200) => { let t; return (...args)=>{ clearTimeout(t); t=setTimeout(()=>fn(...args), ms); }; };
+    q.addEventListener('input', debounce(()=>applyFilters(), 120));
+    sort.addEventListener('change', ()=>applyFilters());
+    tagSel.addEventListener('change', ()=>applyFilters());
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== q) { e.preventDefault(); q.focus(); }
+      if (e.key === 'Escape' && q.value) { q.value=''; applyFilters(); }
+    });
+
+    // --- Theme toggle (with persistence) -----------------------------------
+    const toggle = $('#toggleTheme');
+    function setTheme(mode){
+      const dark = mode === 'dark' || (mode===undefined && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+      document.documentElement.classList.toggle('dark', dark);
+      toggle.setAttribute('aria-pressed', String(dark));
+      document.body.style.background = dark ? 'linear-gradient(135deg, #001a2d, #002b49)' : 'linear-gradient(135deg, var(--bg-grad-a), var(--bg-grad-b))';
+    }
+    setTheme(localStorage.getItem('theme'));
+    toggle.addEventListener('click', () => {
+      const dark = !document.documentElement.classList.contains('dark');
+      setTheme(dark ? 'dark' : 'light');
+      localStorage.setItem('theme', dark ? 'dark' : 'light');
+    });
+
+    // --- Footer & header niceties ------------------------------------------
+    $('#cpyear').textContent = new Date().getFullYear();
+    $('#lastUpdated').textContent = `Last updated: ${new Date(document.lastModified).toLocaleString([], {year:'numeric', month:'short', day:'2-digit'})}`;
+
+    // Simple toast helper for copy feedback
+    let toastEl; function toast(msg, ms=1200, prefill){
+      if (toastEl) toastEl.remove();
+      toastEl = document.createElement('div');
+      toastEl.textContent = msg;
+      toastEl.style.cssText = 'position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:rgba(0,0,0,.8);color:#fff;padding:10px 14px;border-radius:10px;z-index:9999;';
+      document.body.appendChild(toastEl);
+      if (prefill) {
+        const ta = document.createElement('textarea');
+        ta.value = prefill; ta.style.position='fixed'; ta.style.left='-9999px'; document.body.appendChild(ta); ta.select();
+        try { document.execCommand('copy'); toastEl.textContent = 'BibTeX copied'; }
+        catch {}
+        setTimeout(()=>ta.remove(), 10);
+      }
+      setTimeout(()=> toastEl && toastEl.remove(), ms);
+    }
+
+    // JSON-LD for articles (generated per render)
+    function injectArticleJSONLD(items){
+      // remove previous
+      $$('#article-jsonld').forEach(n=>n.remove());
+      items.forEach((p,i)=>{
+        const node = document.createElement('script');
+        node.type='application/ld+json'; node.id='article-jsonld';
+        const data = {
+          '@context': 'https://schema.org', '@type': 'ScholarlyArticle',
+          name: p.title, author: p.authors.split(';').map(a=>({ '@type': 'Person', name: a.trim() })),
+          datePublished: p.year ? String(p.year) : undefined, description: p.abstract,
+          url: new URL(p.pdf, location.href).href,
+          sameAs: new URL(p.pdf, location.href).href
+        };
+        node.textContent = JSON.stringify(data);
+        document.head.appendChild(node);
+      });
+    }
+
+    // Initial UI setup ------------------------------------------------------
+    buildTagOptions();
+    restoreFromURL();
+
+    // Enhance: add rel=noopener noreferrer to any external links created later
+    document.addEventListener('click', (e)=>{
+      const a = e.target.closest('a');
+      if (a && a.target === '_blank') a.rel = 'noopener noreferrer';
+    });
+  </script>
+</body>
+</html>
